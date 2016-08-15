@@ -4,20 +4,19 @@ class MultiplexNetwork {
   ArrayList<Link> m_links1;
   ArrayList<Link> m_links2;
   int time_step;
-  float m_width, m_height;
+  Parameters m_param;
 
-  MultiplexNetwork(int n, float width, float height) {
+  MultiplexNetwork( Parameters param ) {
 
     // Initialize the ArrayList
     m_nodes = new ArrayList<Node>();
     m_links1 = new ArrayList<Link>();
     m_links2 = new ArrayList<Link>();
     time_step = 0;
-    m_width = width;
-    m_height = height;
+    m_param = param;
 
     // Create the nodes
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < m_param.N; i++) {
       // We can't put them right on top of each other
       float x = random(1.0);
       float y = random(1.0);
@@ -29,7 +28,7 @@ class MultiplexNetwork {
   // Draw all nodes
   void showNodes() {
     for( Node n : m_nodes ) {
-      n.display(m_width, m_height);
+      n.display( m_param );
     }
   }
 
@@ -48,20 +47,20 @@ class MultiplexNetwork {
   void showLinks( int layer ) {
     if( layer == 1 ) {
       for( Link l: getLinks(1) ) {
-        l.display(1, m_width, m_height);
+        l.display(1, m_param);
       }
     }
     else if( layer == 2 ) {
       for( Link l: getLinks(2) ) {
-        l.display(2, m_width, m_height);
+        l.display(2, m_param);
       }
     }
     else {
       for( Link l: getLinks(1) ) {
-        l.display(1, m_width, m_height);
+        l.display(1, m_param);
       }
       for( Link l: getLinks(2) ) {
-        l.display(2, m_width, m_height);
+        l.display(2, m_param);
       }
     }
   }
@@ -85,7 +84,7 @@ class MultiplexNetwork {
   }
 
   void strengthenLink(Link link) {
-    link.strengthen(1.0);
+    link.strengthen( m_param.delta );
   }
 
   void removeLinksOfNode(Node node, int layer) {
@@ -105,14 +104,10 @@ class MultiplexNetwork {
       else if( action == 2 ) { ND(node, layer); }
     }
 
-    if( time_step % 1 == 0 ) {
-      for( Node n : m_nodes ) { n.aging(); }
-    }
     time_step += 1;
   }
 
   void LA(Node ni, int layer) {
-    float p_la = 0.05;
 
     if( ni.degree(layer) == 0 ) { return; }
     Link l_ij = ni.edgeSelection(null, layer);
@@ -128,7 +123,7 @@ class MultiplexNetwork {
     Node nk = (l_jk.n1.id == nj.id) ? l_jk.n2 : l_jk.n1;
     Link l_ik = ni.getLinkTo(nk, layer);
     if( l_ik == null ) {
-      if( random(1.0) < p_la ) {
+      if( random(1.0) < m_param.p_la ) {
         addLink(ni, nk, layer);
       }
     }
@@ -138,9 +133,7 @@ class MultiplexNetwork {
   }
 
   void GA(Node ni, int layer) {
-    float p_ga = 0.0005;
-
-    if( ni.degree(layer) > 0 && random(1.0) > p_ga ) { return; }
+    if( ni.degree(layer) > 0 && random(1.0) > m_param.p_ga ) { return; }
     int j = int(random(m_nodes.size()-1));
     if( j >= ni.id ) { j += 1; }
     Node nj = m_nodes.get(j);
@@ -150,9 +143,7 @@ class MultiplexNetwork {
   }
   
   void GeographicGA( Node ni, int layer ) {
-    float p_ga = 0.0005;
-    float alpha = 6.0;
-    if( ni.degree(layer) > 0 && random(1.0) > p_ga ) { return; }
+    if( ni.degree(layer) > 0 && random(1.0) > m_param.p_ga ) { return; }
 
     int i = ni.id;
     float[] probs = new float[ m_nodes.size() ];
@@ -163,7 +154,7 @@ class MultiplexNetwork {
       else if( ni.hasEdge( nj, layer ) ) { probs[j] = 0.0; }
       else {
         float d = nj.pos.Distance(ni.pos);
-        probs[j] = pow(d, -alpha);
+        probs[j] = pow(d, -m_param.alpha);
         probs_sum += probs[j];
       }
     }
@@ -183,11 +174,9 @@ class MultiplexNetwork {
   }
 
   void ND(Node ni, int layer) {
-    float p_nd = 0.001;
-    if( random(1.0) > p_nd ) { return; }
+    if( random(1.0) > m_param.p_nd ) { return; }
 
     removeLinksOfNode(ni, layer);
-    ni.setNewBornColor();
   }
 
   float calcAverageDegree() {

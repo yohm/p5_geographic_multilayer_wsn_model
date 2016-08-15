@@ -6,9 +6,7 @@ class Node {
   int id;
   HashMap<Integer,Link> m_edges1;
   HashMap<Integer,Link> m_edges2;
-  float freshness;
   color original_color;
-  color newborn_color;
   Position2D pos;
 
   Node(int _id, Position2D _pos) {
@@ -16,9 +14,7 @@ class Node {
     pos = _pos;
     m_edges1 = new HashMap<Integer,Link>();
     m_edges2 = new HashMap<Integer,Link>();
-    freshness = 0.0;
     original_color = color(0,0,0);
-    newborn_color = color(0,0,0);
   }
 
   void addEdge(Node node, Link link, int layer) {
@@ -84,21 +80,12 @@ class Node {
     return ret;
   }
 
-  void setNewBornColor() {
-    freshness = 1.0;
-  }
-
-  void aging() {
-    freshness -= 0.01;
-  }
-
-  void display(float w, float h) {
-    color current_color = lerpColor(original_color, newborn_color, freshness);
-    fill(current_color,150);
-    stroke(current_color);
+  void display( Parameters param ) {
+    fill( param.nodeColor,150);
+    stroke( param.nodeColor );
     strokeWeight(2);
-    float x = lerp(0, w, pos.x);
-    float y = lerp(0, h, pos.y);
+    float x = lerp(0, param.width, pos.x);
+    float y = lerp(0, param.height, pos.y);
     ellipse(x,y,4,4);
   }
 }

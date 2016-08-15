@@ -3,6 +3,7 @@
 // (C) Yohsuke Murase 2014
 
 MultiplexNetwork mnet;
+Parameters param = new Parameters();
 
 // Boolean that indicates whether we draw connections or not
 boolean showNodes = true;
@@ -23,7 +24,9 @@ void setup() {
   f = createFont("Arial", 18, true);
   textFont(f);
 
-  mnet = new MultiplexNetwork(250, (float)width, (float)height);
+  param.width = width;
+  param.height = height;
+  mnet = new MultiplexNetwork(param);
 }
 
 void draw() {
@@ -32,7 +35,7 @@ void draw() {
   mnet.updateNetwork(1);
   mnet.updateNetwork(2);
 
-  background(255);
+  background(param.bgColor);
 
   if (showNodes) {
     mnet.showNodes();
@@ -58,7 +61,7 @@ void draw() {
   */
 
   // Print
-  fill(1,1,1);
+  fill(param.textColor);
   String time = String.valueOf(frameCount/3);
   text("t = " + time, 10, 20);
 

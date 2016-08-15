@@ -17,10 +17,12 @@ class Link {
   }
 
   void setStrokeWeight() {
-    stroke_weight = 0.2*log(weight+1.0);
+    stroke_weight = log(weight+1.0);
   }
 
-  void display(int type, float w, float h) {
+  void display(int type, Parameters param) {
+    float w = param.width;
+    float h = param.height;
     float x1 = lerp( 0, w, n1.pos.x );
     float y1 = lerp( 0, h, n1.pos.y );
     float x2 = lerp( 0, w, n2.pos.x );
@@ -28,18 +30,15 @@ class Link {
     // skip drawing if they cross boundary
     if( abs(x1-x2) > 0.5*w ) { return; }
     if( abs(y1-y2) > 0.5*h ) { return; }
-    if( weight < 2 ) { return; }
 
     if( type == 1 ) {
-      color c = color(230);  // #3EBA2B;
-      stroke(c);
-      float sw = 0.4*log(weight+1.0);
+      stroke( param.linkColorL1 );
+      float sw = param.linkStrokeWeightL1 * log(weight+1.0);
       strokeWeight(sw);
     }
     else if( type == 2 ) {
-      color c = color(0);  // #E06A3B;
-      stroke(c);
-      float sw = 0.1*log(weight+1.0);
+      stroke( param.linkColorL2 );
+      float sw = param.linkStrokeWeightL2 * log(weight+1.0);
       strokeWeight(sw);
     }
     line(x1, y1, x2, y2);
