@@ -10,7 +10,6 @@ boolean showNodes = true;
 boolean showLinks = true;
 boolean writing = false;
 int layerToShow = 3;
-int showingLayer = layerToShow;
 
 // Font
 PFont f;
@@ -50,15 +49,6 @@ void draw() {
     mnet.Print(writer);
     writing = false;
   }
-
-  // calculate Stylized facts
-  /*
-  if( frameCount % 9 == 0 ) {
-    g_averageDegree = cluster.calcAverageDegree();
-    g_CC = cluster.calcCC();
-    g_averageWeight = cluster.calcAverageWeight();
-  }
-  */
 
   // Print
   fill(param.textColor);

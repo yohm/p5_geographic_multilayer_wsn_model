@@ -33,12 +33,12 @@ class Link {
 
     if( type == 1 ) {
       stroke( param.linkColorL1 );
-      float sw = param.linkStrokeWeightL1 * log(weight+1.0);
+      float sw = param.linkStrokeWeightL1 * stroke_weight;
       strokeWeight(sw);
     }
     else if( type == 2 ) {
       stroke( param.linkColorL2 );
-      float sw = param.linkStrokeWeightL2 * log(weight+1.0);
+      float sw = param.linkStrokeWeightL2 * stroke_weight;
       strokeWeight(sw);
     }
     line(x1, y1, x2, y2);

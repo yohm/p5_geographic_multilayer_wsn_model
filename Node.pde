@@ -64,14 +64,12 @@ class Node {
     HashMap<Integer,Link> edges = getEdges(layer);
     int id_to_skip = (node != null) ? node.id : -1;
     for( int nid : edges.keySet() ) {
-      // if( node != null && nid == node.id ) { continue; }
       if( nid == id_to_skip ) { continue; }
       w_sum += edges.get(nid).weight;
     }
     float r = random(w_sum);
     Link ret = null;
     for( int nid : edges.keySet() ) {
-      // if( node != null && nid == node.id ) { continue; }
       if( nid == id_to_skip ) { continue; }
       Link link = edges.get(nid);
       r -= link.weight;
