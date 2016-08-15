@@ -9,6 +9,19 @@ The paper is available also on [arXiv](http://arxiv.org/abs/1408.1190).
 - You need [processing](http://processing.org/).
 - Open `p5_geographic_multilayer_wsn_model.pde` in processing, and run it.
 
+- If you type the following keys, you can switch the way of visualizing.
+    - "l" : toggle visibility of links
+    - "n" : toggle visibility of nodes
+    - "1" : show layer 1 only
+    - "2" : show layer 2 only
+    - "3" : show both layer 1 and 2
+    - "s" : dump snapshot file. The image is saved in "snapshot.tiff".
+    - "o" : dump the network in a text format.
+
+## Sample output
+
+![image](https://raw.githubusercontent.com/yohm/p5_geographic_multilayer_wsn_model/master/sample/snapshot.png)
+
 ## License
 
 The MIT License (MIT)
