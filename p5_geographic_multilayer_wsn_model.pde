@@ -9,14 +9,11 @@ Parameters param = new Parameters();
 boolean showNodes = true;
 boolean showLinks = true;
 boolean writing = false;
+boolean snapshot = false;
 int layerToShow = 3;
 
 // Font
 PFont f;
-
-float g_averageDegree = 0.0;
-float g_CC = 0.0;
-float g_averageWeight = 0.0;
 
 void setup() {
   size(800, 600);
@@ -26,11 +23,10 @@ void setup() {
   param.width = width;
   param.height = height;
   mnet = new MultiplexNetwork(param);
+  layerToShow = 3;
 }
 
 void draw() {
-  // layerToShow = (frameCount / 300) % 3 + 1;
-  layerToShow = 3;
   mnet.updateNetwork(1);
   mnet.updateNetwork(2);
 
@@ -48,6 +44,11 @@ void draw() {
     PrintWriter writer = createWriter("net_proc.edg");
     mnet.Print(writer);
     writing = false;
+  }
+  
+  if( snapshot ) {
+    saveFrame("snapshot.tiff");
+    snapshot = false;
   }
 
   // Print
@@ -70,6 +71,9 @@ void keyPressed() {
   }
   else if (key == 'o') {
     writing = true;
+  }
+  else if (key == 's') {
+    snapshot = true;
   }
   else if (key == '1') {
     layerToShow = 1;
