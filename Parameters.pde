@@ -1,5 +1,10 @@
 class Parameters {
   Parameters() {
+    Preset1();
+    Preset2();
+  }
+  
+  void Preset1() {
     N = 250;
     width = 800;
     height = 600;
@@ -17,7 +22,16 @@ class Parameters {
     p_ga = 0.0005;
     alpha = 6;
     p_nd = 0.001;
-    
+  }
+
+  void Preset2() {
+    bgColor = color(0);
+    textColor = color(255);
+    linkStrokeWeightL1 = 0.2;
+    linkStrokeWeightL2 = 0.2;
+    linkColorL1 = #3EBA2B;
+    linkColorL2 = #E06A3B;
+    nodeColor = color(255);
   }
   
   // Visualization parameters
