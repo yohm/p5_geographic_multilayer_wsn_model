@@ -19,7 +19,7 @@ class Parameters {
     // Simulation parameters
     delta = 1.0;
     p_la = 0.05;
-    p_ga = 0.0005;
+    p_ga = 0.002; //05;
     alpha = 6;
     p_nd = 0.001;
   }
