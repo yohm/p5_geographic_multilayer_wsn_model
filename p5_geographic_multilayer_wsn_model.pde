@@ -16,7 +16,7 @@ int layerToShow = 3;
 PFont f;
 
 void setup() {
-  size(800, 600);
+  size(600, 600);
   f = createFont("Arial", 18, true);
   textFont(f);
 

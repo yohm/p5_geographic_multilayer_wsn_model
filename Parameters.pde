@@ -5,9 +5,9 @@ class Parameters {
   }
   
   void Preset1() {
-    N = 250;
-    width = 800;
-    height = 600;
+    N = 300;
+    width  = 0;  // should be set after setup() is called
+    height = 0;
     bgColor = color(255);
     textColor = color(0);
     linkStrokeWeightL1 = 0.4;
